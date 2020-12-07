@@ -1,0 +1,100 @@
+{"frames": {
+
+"flock1.png":
+{
+	"frame": {"x":1,"y":1,"w":60,"h":70},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":70},
+	"sourceSize": {"w":60,"h":70}
+},
+"flock2.png":
+{
+	"frame": {"x":63,"y":1,"w":60,"h":70},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":70},
+	"sourceSize": {"w":60,"h":70}
+},
+"flock3.png":
+{
+	"frame": {"x":1,"y":73,"w":60,"h":70},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":70},
+	"sourceSize": {"w":60,"h":70}
+},
+"flock4.png":
+{
+	"frame": {"x":63,"y":73,"w":60,"h":70},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":70},
+	"sourceSize": {"w":60,"h":70}
+},
+"flock5.png":
+{
+	"frame": {"x":1,"y":145,"w":60,"h":70},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":70},
+	"sourceSize": {"w":60,"h":70}
+},
+"seagull_silo1.png":
+{
+	"frame": {"x":63,"y":145,"w":30,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":20},
+	"sourceSize": {"w":30,"h":20}
+},
+"seagull_silo2.png":
+{
+	"frame": {"x":95,"y":145,"w":30,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":20},
+	"sourceSize": {"w":30,"h":20}
+},
+"seagull_silo3.png":
+{
+	"frame": {"x":1,"y":217,"w":30,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":20},
+	"sourceSize": {"w":30,"h":20}
+},
+"seagull_silo4.png":
+{
+	"frame": {"x":33,"y":217,"w":30,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":20},
+	"sourceSize": {"w":30,"h":20}
+},
+"seagull_silo5.png":
+{
+	"frame": {"x":65,"y":217,"w":30,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":20},
+	"sourceSize": {"w":30,"h":20}
+},
+"sun_day.png":
+{
+	"frame": {"x":1,"y":239,"w":100,"h":100},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+	"sourceSize": {"w":100,"h":100}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "decorators.png",
+	"format": "RGBA8888",
+	"size": {"w":126,"h":340},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:3a22647fdc9f4d0a73693c925d9dc774:beba1d0171e7a77eb9b4a526c73eb3fb:949ff8d415e2de497fd03b6594a4ba56$"
+}
+}

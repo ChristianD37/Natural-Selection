@@ -1,0 +1,52 @@
+{"frames": {
+
+"hawk1.png":
+{
+	"frame": {"x":1,"y":1,"w":84,"h":88},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":84,"h":88},
+	"sourceSize": {"w":84,"h":88}
+},
+"hawk2.png":
+{
+	"frame": {"x":87,"y":1,"w":84,"h":88},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":84,"h":88},
+	"sourceSize": {"w":84,"h":88}
+},
+"hawk3.png":
+{
+	"frame": {"x":173,"y":1,"w":84,"h":88},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":84,"h":88},
+	"sourceSize": {"w":84,"h":88}
+},
+"hawk4.png":
+{
+	"frame": {"x":259,"y":1,"w":84,"h":88},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":84,"h":88},
+	"sourceSize": {"w":84,"h":88}
+},
+"hawk5.png":
+{
+	"frame": {"x":173,"y":1,"w":84,"h":88},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":84,"h":88},
+	"sourceSize": {"w":84,"h":88}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "hawk_sheet.png",
+	"format": "RGBA8888",
+	"size": {"w":344,"h":90},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:484604ea059d6e96d744c9f95618c7ec:2827c04da9a804f82906a1f3c76385a2:123aee7f9a0725a285083bca4024e5a7$"
+}
+}

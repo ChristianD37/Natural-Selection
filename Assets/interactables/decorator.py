@@ -120,3 +120,20 @@ class Birds(Decorator):
         self.current_frame = [random.randint(0, l -1 ), random.randint(0, l-1), random.randint(0, l-1)]
 
         self.images = [self.frames[self.current_frame[0]], self.frames[self.current_frame[1]], self.frames[self.current_frame[2] ] ]
+
+class Large_Tile(pygame.sprite.Sprite):
+    def __init__(self, game, image, x, y):
+        self.game = game
+        pygame.sprite.Sprite.__init__(self, self.game.tiles)
+        self.image = self.game.objects_sheet.get_sprite(image)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def draw(self):
+        # s = pygame.Surface((16,16))
+        # self.game.display.blit(s,
+        #                        (self.rect.x - self.game.camera.offset.x, self.rect.y - self.game.camera.offset.y))
+        rel_x, rel_y = self.rect.x - self.game.camera.offset.x, self.rect.y - self.game.camera.offset.y
+        if rel_x >= 0 and rel_x <= self.game.DISPLAY_W and rel_y >= 0 and rel_y <= self.game.DISPLAY_H:
+            self.game.display.blit(self.image, (rel_x, rel_y))

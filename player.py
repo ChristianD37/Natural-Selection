@@ -143,6 +143,8 @@ class Player(pygame.sprite.Sprite):
                     self.currentFrame = (self.currentFrame + 1) % len(self.hurt_frames_left)
                     self.image = self.hurt_frames_left[self.currentFrame]
             return
+
+
         # Handle jump animation
         if  self.is_jumping or self.velocity.y > 1:
             if self.facing_right:
@@ -177,6 +179,18 @@ class Player(pygame.sprite.Sprite):
                     self.currentFrame = (self.currentFrame + 1) % len(self.left_frames)
                     self.image = self.left_frames[self.currentFrame]
                     self.facing_right = False
+        # Handle swim animation
+        if self.in_water and not self.on_ground:
+            # if now - self.lastUpdate > 150:
+            if self.facing_right:
+                self.lastUpdate = now
+                self.currentFrame = (self.currentFrame + 1) % len(self.swim_frames_right)
+                self.image = self.swim_frames_right[self.currentFrame]
+            else:
+                self.lastUpdate = now
+                self.currentFrame = (self.currentFrame + 1) % len(self.swim_frames_left)
+                self.image = self.swim_frames_left[self.currentFrame]
+            return
         # Handle look/ide animation
         else:
             if self.game.UP_KEY:
@@ -493,6 +507,13 @@ class Player(pygame.sprite.Sprite):
         self.land_frames_left = []
         for frame in self.land_frames_right:
             self.land_frames_left.append(pygame.transform.flip(frame, True, False))
+
+        self.swim_frames_right = []
+        for i in range(1, 6):
+            self.swim_frames_right.append(self.game.duck_sheet.get_sprite("duck_swim" + str(i) + ".png"))
+        self.swim_frames_left = []
+        for frame in self.swim_frames_right:
+            self.swim_frames_left.append(pygame.transform.flip(frame, True, False))
 
 
     def load_sound_effects(self):

@@ -117,12 +117,6 @@ class Snake(pygame.sprite.Sprite):
             elif self.rect.bottomright > tile.rect.bottomright and len(collisions) == 1:
                 self.bump = True
 
-
-
-
-
-
-
 class Hawk(pygame.sprite.Sprite):
     def __init__(self, game,x, y):
         self.game = game
@@ -148,7 +142,8 @@ class Hawk(pygame.sprite.Sprite):
                 and rel_y <= self.game.DISPLAY_H + self.rect.h:
             self.animate()
             self.calc_distance(self.game.player)
-            if self.distance < 300:
+            print(self.distance)
+            if self.distance < 300 and self.distance_from_start() < 608:
                 self.move_towards(self.game.player)
             else:
                 self.move_back()
@@ -183,32 +178,36 @@ class Hawk(pygame.sprite.Sprite):
 
 
     def calc_distance(self, player):
-
         self.distance = hypot((self.position.x-player.position.x),(self.position.y - player.position.y))
         #self.distance = sqrt(   (self.rect.x-player.rect.x)**2 + (self.rect.y - player.rect.y)**2  )
         if self.distance == 0:
-            self.distance =1 
+            self.distance =1
+    def distance_from_start(self):
+        distance = hypot((self.position.x - self.startx), (self.position.y - self.starty))
+        if distance == 0:
+            distance = 1
+        return distance
 
     def move_towards(self, player):
-        # Find the direction of the player
-        dx, dy = player.position.x - self.position.x, player.position.y - self.position.y
-        # Normalize and get unit vector
-        dx, dy  = dx / self.distance, dy / self.distance
-        if dx > 0:
-            self.facing_left = False
-        else:
-            self.facing_left = True
-        self.position.x += dx * self.speedx * self.game.dt
-        self.rect.x = self.position.x
-        #self.checkCollisionsx()
-        self.position.y += dy * self.speedy * self.game.dt
-        if self.position.y > 576 - self.rect.h: #FIXXXXXX!!!!!
-            self.position.y = 576 - self.rect.h
-        self.rect.y = self.position.y
-        #self.checkCollisionsy()
+            # Find the direction of the player
+            dx, dy = player.position.x - self.position.x, player.position.y - self.position.y
+            # Normalize and get unit vector
+            dx, dy  = dx / self.distance, dy / self.distance
+            if dx > 0:
+                self.facing_left = False
+            else:
+                self.facing_left = True
+            self.position.x += dx * self.speedx * self.game.dt
+            self.rect.x = self.position.x
+            #self.checkCollisionsx()
+            self.position.y += dy * self.speedy * self.game.dt
+            if self.position.y > 576 - self.rect.h: #FIXXXXXX!!!!!
+                self.position.y = 576 - self.rect.h
+            self.rect.y = self.position.y
+            #self.checkCollisionsy()
 
     def move_back(self,):
-        # Find the direction of the player
+        # Find the direction of start spot
         dx, dy = self.startx - self.position.x, self.starty - self.position.y
         # Normalize and get unit vector
         dx, dy  = dx / self.distance, dy / self.distance

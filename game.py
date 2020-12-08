@@ -37,7 +37,7 @@ class Game():
         self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
         self.load_menus()
         self.menu = self.Main
-        self.levelnum, self.lives = 1,3
+        self.levelnum, self.lives = 2,3
         self.font_name = "Assets/images/november.ttf"
         self.font = pygame.font.Font(self.font_name, 18)
         self.pause_menu = PauseMenu(self)

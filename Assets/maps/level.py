@@ -15,7 +15,7 @@ class Level:
         self.game = game
         self.choice = choice
         self.dir = os.path.join(os.getcwd(), "Assets", "maps")
-        self.level1_tiles = ["hawk", "snake", "apple", "cloud", "bread", "grass.png",
+        self.level_tiles = ["hawk", "snake", "apple", "cloud", "bread", "grass.png",
                              "grass2.png", "grass3.png", "grass4.png", "leaves.png", "leaves2.png", "leaves3.png", "leaves_base.png",
                              "shrub1.png","shrub2.png","shrub3.png","shrub4.png","shrub5.png", "shrub6.png",
                              "shrub7.png","shrub8.png","shrub9.png","shrub10.png","shrub11.png", "shrub12.png",
@@ -24,13 +24,13 @@ class Level:
                              'start_flag', 'end_flag', 'z3_leaves_side1.png','z3_leaves_side2.png', 'moving_leaf', "platform.png",
                              "z4_sand1.png","z4_sand2.png", "z4_sand3.png", "z4_sand4.png", "bumper", "z5_water.png", "z5_waterTop.png",
                              "z6_grass_shadow1.png","z6_grass_shadow2.png","z6_grass_shadow3.png", "z6_grass_shadow4.png", "z6_ground.png",
-                             "mushroom"]
+                             "mushroom", "chunk", "z6_ground_dino.png"]
         self.load_level()
 
     # Loads the appropriate level
     def load_level(self):
         if (self.choice == 1):
-            self.tile_list = self.level1_tiles
+            self.tile_list = self.level_tiles
             self.game.background.addSprite(BlueBackground(self.game))
             self.game.background.addSprite(Sun(self.game))
             #self.game.background.addSprite(Birds(self.game))
@@ -43,7 +43,22 @@ class Level:
             self.game.camera.setmethod(Follow(self.game))
 
         elif (self.choice == 2):
-            self.tile_list = self.level1_tiles
+            self.tile_list = self.level_tiles
+            self.game.background.addSprite(BlueBackground(self.game))
+            self.game.background.addSprite(Sun(self.game))
+            #self.game.background.addSprite(Birds(self.game))
+            self.load_hud()
+            self.game.scrolling_background = Hills(self.game)
+            self.game.background.addSprite(self.game.scrolling_background)
+            pygame.mixer.music.load(path.join(self.game.theme_dir, "Curious Stroll - Clarinet.ogg"))
+            self.load_map_csv("chaparall_2.csv")
+            self.load_tiles()
+            self.game.camera.setmethod(Auto(self.game))
+
+
+
+        elif (self.choice == 3):
+            self.tile_list = self.level_tiles
             self.game.background = SpriteList(self.game)
             self.game.background.addSprite(OrangeBackground(self.game))
             self.game.background.addSprite(Birds(self.game))
@@ -141,6 +156,9 @@ class Level:
                     self.game.interactive_tiles.addSprite(m)
                 elif tile == '56':
                     self.game.chunk_mark = x * 32
+                elif tile == '57':
+                    l = Large_Tile(self.game, self.tile_list[int(tile)], x * 32, y * 32)
+                    self.game.background_tiles.addSprite(l)
                 x += 1
             y += 1
             self.game.map_w, self.game.map_h = x, y # Load the width and height of the map
@@ -170,48 +188,4 @@ class Level:
         self.game.hud.addSprite(self.game.lives_hud)
         self.game.hud.addSprite(self.game.berries_hud)
 
-# if tile == '0':
-                #     self.tile1 = Tile(self.game, self.tile_list[0],x*32,y*32, False, True)
-                #     self.game.tileList.addSprite(self.tile1)
-                # if tile == '1':
-                #     self.tile2 = Tile(self.game, self.tile_list[1],x*32,y*32, False, True)
-                #     self.game.tileList.addSprite(self.tile2)
-                # if tile == '2':
-                #     self.tile3 = Tile(self.game, self.tile_list[2], x * 32, y * 32, True, True)
-                #     self.game.tileList.addSprite(self.tile3)
-                # if tile == '3':
-                #     self.tile3 = Tile(self.game, self.tile_list[3], x * 32, y * 32, True, True)
-                #     self.game.tileList.addSprite(self.tile3)
-                # if tile == '4':
-                #     self.tile3 = Tile(self.game, self.tile_list[4], x * 32, y * 32, True, True)
-                #     #self.tile3.image = pygame.transform.flip(self.tile3.image,True,False)
-                #     self.game.tileList.addSprite(self.tile3)
-                # if tile == '5' or tile == '6' or tile == '7' or tile == '8' or tile == '9' or tile == '10' or tile == '11' or tile == '12'\
-                #         or tile == '13' or tile == '14' or tile == '15' or tile == '16' or tile == '17' or tile == '18'\
-                #         or tile == '19' or tile == '20' or tile == '21' or tile == '24' or tile == '27' or tile == '28' or tile == '29':
-                #     self.tile3 = Tile(self.game, self.tile_list[int(tile)], x * 32, y * 32, True, False)
-                #     self.game.background_tiles.addSprite(self.tile3)
-                #     self.tile3.remove(self.game.tiles)
-                #
-                # if tile == '22':
-                #     slope = Tile(self.game, self.tile_list[int(tile)], x * 32, y * 32, False, True, ramp=1)
-                #     self.game.slopeList.addSprite(slope)
-                # if tile == '23':
-                #     slope = Tile(self.game, self.tile_list[int(tile)], x * 32, y * 32, False, True, ramp=2)
-                #     self.game.slopeList.addSprite(slope)
-                #
-                #
-                # if tile == '25':
-                #     h = Hawk(self.game, x* 32, y * 32)
-                #     self.game.enemyList.addSprite(h)
-                # if tile == '26':
-                #     s = Snake(self.game, x*32, y*32)
-                #     self.game.enemyList.addSprite(s)
-                #
-                # if tile == '30':
-                #     self.game.bread= Food(self.game, x * 32, y * 32, "bread")
-                #     self.game.x_mark, self.game.y_mark = x*32, y *32
-                #     self.game.objectList.addSprite(self.game.bread)
-                # if tile == '31':
-                #     apple = Food(self.game, x * 32, y * 32, "apple2")
-                #     self.game.objectList.addSprite(apple)
+

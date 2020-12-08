@@ -24,6 +24,9 @@ class Camera:
                                        (self.game.player.rect.y - self.game.camera.scrollval.y - self.game.DISPLAY_H / 2)
         self.offset.x, self.offset.y = (self.game.player.rect.x - self.game.camera.scrollval.x - self.game.DISPLAY_W/4), \
                         (self.game.player.rect.y - self.game.camera.scrollval.y - self.game.DISPLAY_H / 2 )
+        if type(self.method).__name__ == "Auto":
+            self.scrollval.x = self.game.player.rect.x - 50
+            self.offset.x = self.scrollval.x
 
 
 

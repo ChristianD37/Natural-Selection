@@ -1,0 +1,52 @@
+{"frames": {
+
+"egg1.png":
+{
+	"frame": {"x":1,"y":1,"w":256,"h":256},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+"egg2.png":
+{
+	"frame": {"x":259,"y":1,"w":256,"h":256},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+"egg3.png":
+{
+	"frame": {"x":517,"y":1,"w":256,"h":256},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+"egg4.png":
+{
+	"frame": {"x":259,"y":1,"w":256,"h":256},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+"egg5.png":
+{
+	"frame": {"x":1,"y":1,"w":256,"h":256},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
+	"sourceSize": {"w":256,"h":256}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "egg.png",
+	"format": "RGBA8888",
+	"size": {"w":774,"h":258},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:c3f2c11649a599b431e01e891203d9c0:6e3fc22cf080c9ba75edb64ef541df4c:f2ac48b1c7b5b0a41ac50c4888a029cf$"
+}
+}

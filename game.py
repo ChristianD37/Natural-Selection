@@ -3,6 +3,7 @@ from Assets.util.camera import Camera
 from Assets.interactables.decorator import *
 from Assets.menus.menu import *
 from Assets.menus.end_level import *
+from Assets.menus.intro import Intro
 from Assets.util.spritesheet import *
 from Assets.util.fps import FPS
 from Assets.enemies.enemies import *
@@ -37,7 +38,7 @@ class Game():
         self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
         self.load_menus()
         self.menu = self.Main
-        self.levelnum, self.lives = 2,3
+        self.levelnum, self.lives = 1,3
         self.font_name = "Assets/images/november.ttf"
         self.font = pygame.font.Font(self.font_name, 18)
         self.pause_menu = PauseMenu(self)
@@ -292,7 +293,7 @@ class Game():
         fade = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
         fade.fill((0, 0, 0))
         alpha, now, current_time = 0, pygame.time.get_ticks(), pygame.time.get_ticks()
-        while now - current_time < 500:
+        while now - current_time < 750:
             now = pygame.time.get_ticks()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -349,6 +350,7 @@ class Game():
         self.controls_menu = ControlsMenu(self)
         self.end_screen = LevelComplete(self)
         self.game_over_menu = GameOver(self)
+        self.intro = Intro(self)
 
 
     def get_delta(self):
@@ -371,6 +373,7 @@ class Game():
         self.grass_tiles = Spritesheet(os.path.join(dir, "tiles"))
         self.objects_sheet = Spritesheet(os.path.join(dir, "objects"))
         self.background_sheet = Spritesheet(os.path.join(dir, "decorators"))
+        self.egg_sheet = Spritesheet(os.path.join(dir, "egg"))
 
     def load_controls(self):
         self.joysticks = []

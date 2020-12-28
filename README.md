@@ -11,7 +11,7 @@ Flipper, a newborn hatchling, finds himself wandering through the a world full o
 
 
 
-![Leaves Screen](https://github.com/ChristianD37/Natural-Selection/blob/main/Screenshots/Leaves_screenshot.gif)
+![Leaves Screen](https://github.com/ChristianD37/Natural-Selection/blob/main/Screenshots/Leaves_screen.gif)
 
 ## How to Play
 

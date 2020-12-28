@@ -20,4 +20,5 @@ Natural Selection is currently being developed and a finished build has not been
 ## Credits
 
 Created by Christian Duenas
+
 Sprite Assistance by Phoebe Ly

@@ -4,6 +4,7 @@ from Assets.interactables.decorator import *
 from Assets.menus.menu import *
 from Assets.menus.end_level import *
 from Assets.menus.intro import Intro
+from Assets.menus.level_select import Level_Select
 from Assets.util.spritesheet import *
 from Assets.util.fps import FPS
 from Assets.enemies.enemies import *
@@ -34,6 +35,8 @@ class Game():
         self.START_KEY, self.BACK_KEY, self.RUN_KEY  = False, False, False,False, False, False, False, False
         self.load_directories()
         self.load_controls()
+        self.sound_effects, self.effects_vol = {}, {}
+        self.set_sound_volume()
         pygame.display.set_caption(self.TITLE)
         self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
         self.load_menus()
@@ -43,8 +46,6 @@ class Game():
         self.font = pygame.font.Font(self.font_name, 18)
         self.pause_menu = PauseMenu(self)
         self.pause = False
-        self.volume_mult = 1
-        self.volume_setting = 100
         self.x_mark, self.y_mark = 0,0
         self.map_w, self.map_h, self.deathzone = 0,0, 0
         self.update_dist = 32 * 2
@@ -54,7 +55,7 @@ class Game():
         self.load_HUD_text(20, (0, 0, 0))
         self.chunk = [[]]
         self.current_chunk, self.chunk_mark = 0, 0
-        self.sound_effects, self.effects_vol = {}, {}
+
 
     # Re-initialize assets for a level
     def reset(self):
@@ -84,7 +85,7 @@ class Game():
         self.dt = 1
         self.update_dist = 48 * 2
         self.camera.reset_cam()
-        pygame.mixer.music.set_volume(self.volume_mult)
+        #pygame.mixer.music.set_volume(self.volume_mult)
         self.fade_screen()
         self.fade_radius = self.DISPLAY_W * .5
         self.camera.scroll()
@@ -227,15 +228,14 @@ class Game():
             self.playing = False
             self.levelnum += 1
             self.menu = self.end_screen
-            self.player.victory_sound.play()
+            for sound in self.sound_effects:
+                self.sound_effects[sound].stop()
+            self.sound_effects['victory'].play()
             pygame.mixer.music.stop()
 
         if self.player.checkDeath():
             self.player.alive = False
             self.lives -= 1
-
-
-
 
     # Draw all sprites on screen
     def draw_screen(self):
@@ -349,6 +349,7 @@ class Game():
         self.volume_menu = VolumeMenu(self)
         self.controls_menu = ControlsMenu(self)
         self.end_screen = LevelComplete(self)
+        self.level_select = Level_Select(self)
         self.game_over_menu = GameOver(self)
         self.intro = Intro(self)
 
@@ -400,6 +401,9 @@ class Game():
             self.CONTROLS = self.DEF_CONTROLS
         self.reassign_controls()
         self.CONTROL_LIST = ['Left', 'Right','Up','Down', 'Start', 'Jump', 'Run']
+        # Load game data
+        with open(os.path.join(self.options_dir, "save.json"), 'r+') as file:
+            self.save_data = json.load(file)
 
     def reassign_controls(self):
         # Helper function to reassign controls
@@ -411,6 +415,22 @@ class Game():
         new_sound  = pygame.mixer.Sound(path.join(self.effects_dir, sound + extension) )
         new_sound.set_volume(volume * self.volume_mult)
         self.sound_effects[sound] = new_sound
+
+    def load_sounds(self):
+        self.add_sound("Jump",.3)
+        self.add_sound('victory', .7, '.wav')
+        self.add_sound('hurt', .7)
+        self.add_sound('pickup', 1)
+        self.add_sound('splash', .7)
+        self.add_sound('berry_collect', .25)
+        self.add_sound('select',1)
+
+    def set_sound_volume(self):
+        self.volume_mult = 1
+        self.volume_setting = self.save_data["volume"]
+        self.volume_mult = self.volume_setting / 100
+        self.load_sounds()
+        pygame.mixer.music.set_volume(self.volume_setting / 100)
 
 
     def quit(self):

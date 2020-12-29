@@ -1,0 +1,49 @@
+{
+  "level": {
+    "1": {
+      "complete": false,
+      "unlocked": true,
+      "items": {
+        "1": false,
+        "2": false,
+        "3": false
+      },
+      "berries": 0,
+      "level_name": "Chaparall - 1"
+    },
+    "2": {
+      "complete": false,
+      "unlocked": false,
+      "items": {
+        "1": false,
+        "2": false,
+        "3": false
+      },
+      "berries": 0,
+      "level_name": "Chaparall - 2"
+    },
+    "3": {
+      "complete": false,
+      "unlocked": false,
+      "items": {
+        "1": false,
+        "2": false,
+        "3": false
+      },
+      "berries": 0,
+      "level_name": "Beach     - 1"
+    },
+    "4": {
+      "complete": false,
+      "unlocked": false,
+      "items": {
+        "1": false,
+        "2": false,
+        "3": false
+      },
+      "berries": 0,
+      "level_name": "Beach     - 1"
+    }
+  },
+  "volume" : 100
+}

@@ -9,7 +9,6 @@ class Player(pygame.sprite.Sprite):
         self.groups = self.game.all_Sprites
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.load_images()
-        self.load_sound_effects()
         self.rect = self.image.get_rect()
         self.position = vec(0,0)
         self.rect.x = self.position.x
@@ -39,6 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.bound_box.center = self.rect.center
         self.reset_timer = 0
         self.in_water = False
+        self.fruits = []
 
 
     # Updates player coordinates
@@ -248,7 +248,7 @@ class Player(pygame.sprite.Sprite):
             self.velocity.y = -3
         elif self.jump_frames < 2:
             #self.position.y -= 1
-            self.jump_sound.play()
+            self.game.sound_effects['Jump'].play()
             self.velocity.y = -13.7 # -12
             self.is_jumping = True
             self.on_ground = False
@@ -411,8 +411,6 @@ class Player(pygame.sprite.Sprite):
         if self.rect.y > self.game.deathzone:
             self.hurt = True
 
-
-
     # Checks if the player has passed the flag
     def check_object_collision(self):
         hits = []
@@ -420,8 +418,8 @@ class Player(pygame.sprite.Sprite):
             if self.rect.colliderect(tile):
                 hits.append(tile)
         for hit in hits:
-            self.pickup_sound.play()
-            if hit.food == 'bread':
+            self.game.sound_effects['pickup'].play()
+            if hit.food == 'bread_loaf':
                 self.game.complete = True
             elif hit.food == 'blueberry':
                 self.berry_count += 1
@@ -445,16 +443,13 @@ class Player(pygame.sprite.Sprite):
 
     def fall_off(self):
         if not self.hurt_jump:
-            self.hurt_sound.play()
+            self.game.sound_effects['hurt'].play()
             self.velocity.y = -10
             self.hurt_jump = True
         self.velocity.y += self.acc.y * self.game.dt
         if self.velocity.y > 15:
             self.velocity.y = 15
         self.rect.y += self.velocity.y * self.game.dt
-
-
-
 
     def load_images(self):
         self.idle_frames  = [self.game.duck_sheet.get_sprite("idleDuck1.png"),
@@ -514,28 +509,4 @@ class Player(pygame.sprite.Sprite):
         self.swim_frames_left = []
         for frame in self.swim_frames_right:
             self.swim_frames_left.append(pygame.transform.flip(frame, True, False))
-
-
-    def load_sound_effects(self):
-        self.jump_sound = pygame.mixer.Sound(path.join(self.game.effects_dir, "Jump.ogg"))
-        self.jump_sound.set_volume(.3 * self.game.volume_mult)
-        # self.walk_sound = pygame.mixer.Sound(path.join(self.game.effects_dir, "pitter.ogg"))
-        # self.walk_sound.set_volume(.1)
-        self.game.sounds_list.append(self.jump_sound)
-        self.game.default_vol.append(.3)
-        self.victory_sound = pygame.mixer.Sound(path.join(self.game.effects_dir, "victory.wav"))
-        self.victory_sound.set_volume(.7 * self.game.volume_mult)
-        self.game.sounds_list.append(self.victory_sound)
-        self.game.default_vol.append(.7)
-        self.hurt_sound = pygame.mixer.Sound(path.join(self.game.effects_dir, "hurt.ogg"))
-        self.hurt_sound.set_volume( self.game.volume_mult)
-        self.game.sounds_list.append(self.hurt_sound)
-        self.game.default_vol.append(1)
-        self.pickup_sound = pygame.mixer.Sound(path.join(self.game.effects_dir, "pickup.ogg"))
-        self.pickup_sound.set_volume(self.game.volume_mult)
-        self.game.sounds_list.append(self.pickup_sound)
-        self.game.default_vol.append(1)
-        self.game.add_sound('splash',.7)
-
-
 

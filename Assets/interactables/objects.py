@@ -35,6 +35,7 @@ class Food(pygame.sprite.Sprite):
 
     def collect(self):
         self.hud_image.image = self.game.objects_sheet.get_sprite(self.food + '.png')
+        self.game.player.fruits.append(self.food)
         self.kill()
         self.game.objectList.sprites.remove(self)
 

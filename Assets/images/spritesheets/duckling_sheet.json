@@ -2,7 +2,7 @@
 
 "duck_land1.png":
 {
-	"frame": {"x":1,"y":1,"w":48,"h":48},
+	"frame": {"x":51,"y":101,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -10,7 +10,7 @@
 },
 "duck_land2.png":
 {
-	"frame": {"x":51,"y":1,"w":48,"h":48},
+	"frame": {"x":1,"y":151,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -18,7 +18,7 @@
 },
 "duck_land3.png":
 {
-	"frame": {"x":1,"y":51,"w":48,"h":48},
+	"frame": {"x":51,"y":151,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -26,7 +26,7 @@
 },
 "duck_land4.png":
 {
-	"frame": {"x":51,"y":51,"w":48,"h":48},
+	"frame": {"x":1,"y":201,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -34,7 +34,7 @@
 },
 "duck_land5.png":
 {
-	"frame": {"x":1,"y":101,"w":48,"h":48},
+	"frame": {"x":51,"y":201,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -42,7 +42,7 @@
 },
 "duck_land6.png":
 {
-	"frame": {"x":1,"y":1,"w":48,"h":48},
+	"frame": {"x":51,"y":101,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -50,7 +50,7 @@
 },
 "duck_run1.png":
 {
-	"frame": {"x":51,"y":101,"w":48,"h":48},
+	"frame": {"x":1,"y":251,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -58,7 +58,7 @@
 },
 "duck_run2.png":
 {
-	"frame": {"x":1,"y":151,"w":48,"h":48},
+	"frame": {"x":51,"y":251,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -66,7 +66,7 @@
 },
 "duck_run3.png":
 {
-	"frame": {"x":51,"y":151,"w":48,"h":48},
+	"frame": {"x":1,"y":301,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -74,53 +74,61 @@
 },
 "duck_run4.png":
 {
-	"frame": {"x":1,"y":201,"w":48,"h":48},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
-	"sourceSize": {"w":48,"h":48}
-},
-"duck_swim1.png":
-{
-	"frame": {"x":51,"y":201,"w":48,"h":48},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
-	"sourceSize": {"w":48,"h":48}
-},
-"duck_swim2.png":
-{
-	"frame": {"x":1,"y":251,"w":48,"h":48},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
-	"sourceSize": {"w":48,"h":48}
-},
-"duck_swim3.png":
-{
-	"frame": {"x":51,"y":251,"w":48,"h":48},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
-	"sourceSize": {"w":48,"h":48}
-},
-"duck_swim4.png":
-{
-	"frame": {"x":1,"y":301,"w":48,"h":48},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
-	"sourceSize": {"w":48,"h":48}
-},
-"duck_swim5.png":
-{
 	"frame": {"x":51,"y":301,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
 	"sourceSize": {"w":48,"h":48}
 },
-"DuckBlink.png":
+"duck_sleep1.png":
+{
+	"frame": {"x":1,"y":601,"w":78,"h":78},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":78,"h":78},
+	"sourceSize": {"w":78,"h":78}
+},
+"duck_sleep2.png":
+{
+	"frame": {"x":1,"y":681,"w":78,"h":78},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":78,"h":78},
+	"sourceSize": {"w":78,"h":78}
+},
+"duck_sleep3.png":
+{
+	"frame": {"x":1,"y":761,"w":78,"h":78},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":78,"h":78},
+	"sourceSize": {"w":78,"h":78}
+},
+"duck_sleep4.png":
+{
+	"frame": {"x":1,"y":841,"w":78,"h":78},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":78,"h":78},
+	"sourceSize": {"w":78,"h":78}
+},
+"duck_sleep5.png":
+{
+	"frame": {"x":1,"y":921,"w":78,"h":78},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":78,"h":78},
+	"sourceSize": {"w":78,"h":78}
+},
+"duck_sleep6.png":
+{
+	"frame": {"x":1,"y":1001,"w":78,"h":78},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":78,"h":78},
+	"sourceSize": {"w":78,"h":78}
+},
+"duck_swim1.png":
 {
 	"frame": {"x":1,"y":351,"w":48,"h":48},
 	"rotated": false,
@@ -128,7 +136,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
 	"sourceSize": {"w":48,"h":48}
 },
-"duckDown.png":
+"duck_swim2.png":
 {
 	"frame": {"x":51,"y":351,"w":48,"h":48},
 	"rotated": false,
@@ -136,7 +144,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
 	"sourceSize": {"w":48,"h":48}
 },
-"duckJump.png":
+"duck_swim3.png":
 {
 	"frame": {"x":1,"y":401,"w":48,"h":48},
 	"rotated": false,
@@ -144,7 +152,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
 	"sourceSize": {"w":48,"h":48}
 },
-"duckUp.png":
+"duck_swim4.png":
 {
 	"frame": {"x":51,"y":401,"w":48,"h":48},
 	"rotated": false,
@@ -152,15 +160,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
 	"sourceSize": {"w":48,"h":48}
 },
-"duckwalk1.png":
-{
-	"frame": {"x":1,"y":1,"w":48,"h":48},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
-	"sourceSize": {"w":48,"h":48}
-},
-"duckwalk2.png":
+"duck_swim5.png":
 {
 	"frame": {"x":1,"y":451,"w":48,"h":48},
 	"rotated": false,
@@ -168,15 +168,47 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
 	"sourceSize": {"w":48,"h":48}
 },
-"duckwalk3.png":
+"DuckBlink.png":
 {
-	"frame": {"x":1,"y":1,"w":48,"h":48},
+	"frame": {"x":39,"y":1,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
 	"sourceSize": {"w":48,"h":48}
 },
-"duckwalk4.png":
+"duckDown.png":
+{
+	"frame": {"x":1,"y":51,"w":48,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
+	"sourceSize": {"w":48,"h":48}
+},
+"duckJump.png":
+{
+	"frame": {"x":51,"y":51,"w":48,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
+	"sourceSize": {"w":48,"h":48}
+},
+"duckUp.png":
+{
+	"frame": {"x":1,"y":101,"w":48,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
+	"sourceSize": {"w":48,"h":48}
+},
+"duckwalk1.png":
+{
+	"frame": {"x":51,"y":101,"w":48,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
+	"sourceSize": {"w":48,"h":48}
+},
+"duckwalk2.png":
 {
 	"frame": {"x":51,"y":451,"w":48,"h":48},
 	"rotated": false,
@@ -184,9 +216,25 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
 	"sourceSize": {"w":48,"h":48}
 },
+"duckwalk3.png":
+{
+	"frame": {"x":51,"y":101,"w":48,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
+	"sourceSize": {"w":48,"h":48}
+},
+"duckwalk4.png":
+{
+	"frame": {"x":1,"y":501,"w":48,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
+	"sourceSize": {"w":48,"h":48}
+},
 "ghost_duck1.png":
 {
-	"frame": {"x":1,"y":501,"w":96,"h":96},
+	"frame": {"x":1,"y":1081,"w":96,"h":96},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":96,"h":96},
@@ -194,7 +242,7 @@
 },
 "ghost_duck2.png":
 {
-	"frame": {"x":1,"y":599,"w":96,"h":96},
+	"frame": {"x":1,"y":1179,"w":96,"h":96},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":96,"h":96},
@@ -202,7 +250,7 @@
 },
 "ghost_duck3.png":
 {
-	"frame": {"x":1,"y":697,"w":96,"h":96},
+	"frame": {"x":1,"y":1277,"w":96,"h":96},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":96,"h":96},
@@ -210,7 +258,7 @@
 },
 "ghost_duck4.png":
 {
-	"frame": {"x":1,"y":795,"w":96,"h":96},
+	"frame": {"x":1,"y":1375,"w":96,"h":96},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":96,"h":96},
@@ -218,7 +266,7 @@
 },
 "ghost_duck5.png":
 {
-	"frame": {"x":1,"y":893,"w":96,"h":96},
+	"frame": {"x":1,"y":1473,"w":96,"h":96},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":96,"h":96},
@@ -226,7 +274,7 @@
 },
 "ghost_duck6.png":
 {
-	"frame": {"x":1,"y":991,"w":96,"h":96},
+	"frame": {"x":1,"y":1571,"w":96,"h":96},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":96,"h":96},
@@ -234,7 +282,7 @@
 },
 "ghost_duck7.png":
 {
-	"frame": {"x":1,"y":1089,"w":96,"h":96},
+	"frame": {"x":1,"y":1669,"w":96,"h":96},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":96,"h":96},
@@ -242,7 +290,7 @@
 },
 "ghost_duck8.png":
 {
-	"frame": {"x":1,"y":1187,"w":96,"h":96},
+	"frame": {"x":1,"y":1767,"w":96,"h":96},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":96,"h":96},
@@ -250,7 +298,7 @@
 },
 "HuD_duck.png":
 {
-	"frame": {"x":1,"y":1285,"w":36,"h":26},
+	"frame": {"x":1,"y":1,"w":36,"h":26},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":36,"h":26},
@@ -258,7 +306,7 @@
 },
 "hurt1.png":
 {
-	"frame": {"x":39,"y":1285,"w":48,"h":48},
+	"frame": {"x":51,"y":501,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -266,7 +314,7 @@
 },
 "hurt2.png":
 {
-	"frame": {"x":1,"y":1335,"w":48,"h":48},
+	"frame": {"x":1,"y":551,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -274,7 +322,7 @@
 },
 "idleDuck1.png":
 {
-	"frame": {"x":1,"y":1,"w":48,"h":48},
+	"frame": {"x":51,"y":101,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -282,7 +330,7 @@
 },
 "idleDuck2.png":
 {
-	"frame": {"x":51,"y":1335,"w":48,"h":48},
+	"frame": {"x":51,"y":551,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -293,8 +341,8 @@
 	"version": "1.0",
 	"image": "duckling_sheet.png",
 	"format": "RGBA8888",
-	"size": {"w":100,"h":1384},
+	"size": {"w":100,"h":1864},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:f08b7aec907fa9ebcee3b17b0088b933:a4e67a33ef34cd0d03f80bc90d03e12d:1e7967fb2e370d308abd6c584810de71$"
+	"smartupdate": "$TexturePacker:SmartUpdate:7f17dcba8ab5d3bdb624b774a751b475:66ed357a42c5e2e552309301f9ab6f3a:1e7967fb2e370d308abd6c584810de71$"
 }
 }

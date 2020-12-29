@@ -9,3 +9,7 @@ def load_controls():
 def write_controls(new_controls):
     with open(os.path.join('util','controls.json'), 'w') as file:
         json.dump(new_controls, file)
+
+def write_save(dir,data):
+    with open(os.path.join(dir,'save.json'), 'w') as file:
+        json.dump(data, file)

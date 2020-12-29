@@ -1,6 +1,7 @@
 import pygame
 from os import path
-import json
+import json, math
+from Assets.util.file_handler import write_save
 
 # Menus between the game
 class Menu():
@@ -14,9 +15,6 @@ class Menu():
         self.cursor_rect = self.cursor_img.get_rect()
         self.mid_w = self.game.DISPLAY_W / 2
         self.mid_h = self.game.DISPLAY_H / 2
-        self.move_sound = pygame.mixer.Sound(path.join(self.game.effects_dir, "select.ogg"))
-        self.game.sounds_list.append(self.move_sound)
-        self.game.default_vol.append(1)
         self.font_size = 40
 
 
@@ -67,6 +65,8 @@ class Menu():
                     self.game.UP_KEY = True
                 if event.key == self.game.RUN_CONTROL:
                     self.game.RUN_KEY = True
+                if event.key == self.game.JUMP_CONTROL:
+                    self.game.JUMP_KEY = True
             if event.type == pygame.KEYUP:
                 if event.key == self.game.LEFT_CONTROL:
                     self.game.LEFT_KEY = False
@@ -80,6 +80,8 @@ class Menu():
                     self.game.START_KEY = False
                 if event.key == self.game.RUN_CONTROL:
                     self.game.RUN_KEY = False
+                if event.key == self.game.JUMP_CONTROL:
+                    self.game.JUMP_KEY = False
 
     # Main Menu Screen
     def display_menu(self):
@@ -109,6 +111,7 @@ class MainMenu(Menu):
             self.check_input()
             self.animate()
             self.game.display.blit(self.images[self.current_frame], (0,0))
+            pygame.draw.polygon(self.game.display,(9,8,6), self.shadows)
             self.draw_text("Natural Selection Demo", 100, (0, 0, 0), self.game.DISPLAY_W / 2,self.game.DISPLAY_H / 3 )
             self.draw_text("Start Game", 20, pygame.Color((0,0,0)), self.startx, self.starty)
             self.draw_text("Options", 20, pygame.Color((0,0,0)), self.optionsx,self.optionsy)
@@ -120,11 +123,13 @@ class MainMenu(Menu):
 
     def check_input(self):
         self.move_cursor()
-        if self.game.START_KEY:
+        if (self.game.START_KEY or self.game.JUMP_KEY):
             if self.state == 'Start':
-                self.game.playing = True
+                #self.game.playing = True
+                self.game.menu = self.game.level_select
                 self.run_display = False
-                self.move_sound.play()
+                self.game.sound_effects['select'].play()
+                #self.game.fade_screen()
             if self.state == 'Options':
                 self.game.menu = self.game.options
                 self.run_display = False
@@ -134,7 +139,7 @@ class MainMenu(Menu):
 
     def move_cursor(self):
         if self.game.DOWN_KEY:
-            self.move_sound.play()
+            self.game.sound_effects['select'].play()
             if  self.state == 'Start':
                 self.cursor_rect.center = (self.optionsx + self.offset,self.optionsy)
                 self.state = 'Options'
@@ -145,7 +150,7 @@ class MainMenu(Menu):
                 self.cursor_rect.center = (self.startx + self.offset, self.starty)
                 self.state = 'Start'
         elif self.game.UP_KEY:
-            self.move_sound.play()
+            self.game.sound_effects['select'].play()
             if  self.state == 'Start':
                 self.cursor_rect.center = (self.creditsx + self.offset, self.creditsy)
                 self.state = 'Credits'
@@ -166,6 +171,18 @@ class MainMenu(Menu):
         self.current_frame, self.last_updated = 0, 0
         self.images = [pygame.image.load(path.join(self.img_dir, 'MenuScreen1.png')).convert_alpha(),
                        pygame.image.load(path.join(self.img_dir, 'MenuScreen2.png')).convert_alpha() ]
+        self.outline  = pygame.mask.from_surface(pygame.image.load(path.join(self.img_dir, 'hatch1.png'))).outline()
+        self.outline = [(x + 702 - 60, y + 288 - 34 ) for x,y in self.outline]
+        self.sun_position = pygame.Vector2(0,0)
+        self.target_position = pygame.Vector2(960,540)
+        self.sun_angle = math.atan2((self.sun_position.x - self.target_position.x), (self.sun_position.y - self.target_position.y) )
+        self.shadows = []
+        for x, y in self.outline:
+            shadow_height = (508 - y) * 1.5
+            shadow_width = shadow_height * math.tan(self.sun_angle)
+            shadow_point = (x + shadow_width, y + shadow_height)
+            self.shadows.append(shadow_point)
+
 
 class OptionsMenu(Menu):
     def __init__(self, game):
@@ -181,7 +198,7 @@ class OptionsMenu(Menu):
         while self.run_display:
             self.check_events()
             self.check_inputs()
-            self.game.display.fill((255, 255, 255))
+            self.game.display.fill((198,215,185))
             self.draw_text("Options", 20, pygame.Color((0,0,0)), self.mid_w, self.game.DISPLAY_H /4)
             self.draw_text("Volume", 20, pygame.Color((0,0,0)), self.volx, self.voly)
             self.draw_text("Controls", 20, pygame.Color((0,0,0)), self.contrx, self.contry)
@@ -190,11 +207,11 @@ class OptionsMenu(Menu):
             self.game.reset_keys()
 
     def check_inputs(self):
-        if self.game.BACK_KEY:
+        if self.game.BACK_KEY or self.game.RUN_KEY:
             self.game.menu = self.game.Main
             self.run_display = False
             return
-        elif self.game.START_KEY:
+        elif self.game.START_KEY or self.game.JUMP_KEY:
             if self.state == 'Volume':
                 self.game.menu = self.game.volume_menu
                 self.run_display = False
@@ -218,7 +235,7 @@ class OptionsMenu(Menu):
 
     def move_cursor(self):
         if self.game.DOWN_KEY:
-            self.move_sound.play()
+            self.game.sound_effects['select'].play()
             if  self.state == 'Volume':
                 self.cursor_rect.center = (self.volx + self.offset,self.voly)
 
@@ -238,7 +255,7 @@ class VolumeMenu(Menu):
         while self.run_display:
             self.check_events()
             self.check_inputs()
-            self.game.display.fill((255, 255, 255))
+            self.game.display.fill((198,215,185))
             self.draw_text("Options", 20, pygame.Color((0,0,0)), self.mid_w, self.game.DISPLAY_H / 4)
             self.draw_text("Volume", 20, pygame.Color((0,0,0)), self.volx, self.voly)
             self.draw_text(f"Volume Level: {self.game.volume_setting}% ", 20, pygame.Color((0,0,0)), self.mid_w, self.mid_h + 60)
@@ -249,19 +266,19 @@ class VolumeMenu(Menu):
             self.game.reset_keys()
 
     def check_inputs(self):
-        if self.game.BACK_KEY:
+        if self.game.BACK_KEY or self.game.RUN_KEY:
             self.game.menu = self.game.options
             self.run_display = False
             return
         elif self.game.LEFT_KEY:
-            self.move_sound.play()
+            self.game.sound_effects['select'].play()
             self.state = '-'
             self.cursor_rect.center = (self.minx + self.offset, self.miny)
         elif self.game.RIGHT_KEY:
-            self.move_sound.play()
+            self.game.sound_effects['select'].play()
             self.state = '+'
             self.cursor_rect.center = (self.plusx + self.offset, self.plusy)
-        elif self.game.START_KEY:
+        elif (self.game.START_KEY or self.game.JUMP_KEY):
             self.adjust_audio()
 
     def adjust_audio(self):
@@ -276,11 +293,11 @@ class VolumeMenu(Menu):
             else:
                 self.game.volume_setting -= 5
         self.game.volume_mult = self.game.volume_setting / 100
+        self.game.save_data["volume"] = self.game.volume_setting
+        write_save(self.game.options_dir,self.game.save_data)
         pygame.mixer.music.set_volume(self.game.volume_mult)
-        i = 0
-        for sound in self.game.sounds_list:
-            sound.set_volume(self.game.default_vol[i] * self.game.volume_mult)
-            i += 1
+        for sound in self.game.sound_effects:
+            self.game.sound_effects[sound].set_volume(self.game.volume_mult)
 
 class ControlsMenu(Menu):
     def __init__(self, game):
@@ -294,13 +311,13 @@ class ControlsMenu(Menu):
     def display_menu(self):
         self.run_display = True
         self.game.START_KEY = False
-        self.game.BACK_KEY = False
+        self.game.BACK_KEY, self.game.RUN_KEY = False, False
         #pygame.mixer.pause()
         while self.run_display:
             self.game.get_delta()
             self.check_events()
             self.check_input()
-            self.game.display.fill((255, 255, 255))
+            self.game.display.fill((198,215,185))
             self.draw_text('Change Controls',20, pygame.Color((0,0,0)), self.game.DISPLAY_W/2, self.game.DISPLAY_H/4)
             self.display_current_controls()
             self.draw_cursor()
@@ -314,7 +331,7 @@ class ControlsMenu(Menu):
             i += 40
 
     def check_input(self):
-        if self.game.BACK_KEY:
+        if self.game.BACK_KEY or self.game.RUN_KEY:
             self.game.menu = self.game.options
             self.run_display = False
             return
@@ -334,7 +351,7 @@ class ControlsMenu(Menu):
     def get_new_control(self):
         done = False
         while not done:
-            self.game.display.fill((255, 255, 255))
+            self.game.display.fill((198,215,185))
             self.draw_text('Enter a New ' + self.game.CONTROL_LIST[self.curr_index] + ' Key', 20,
                            pygame.Color((0,0,0)), self.game.DISPLAY_W / 2,self.game.DISPLAY_H / 4)
             self.blit_screen()
@@ -369,7 +386,7 @@ class PauseMenu(Menu):
     def display_menu(self):
         #self.store_events()
         self.run_display = True
-        self.game.START_KEY, self.game.BACK_KEY, self.game.DOWN_KEY = False, False, False
+        self.game.START_KEY, self.game.BACK_KEY, self.game.DOWN_KEY, self.game.RUN_KEY = False, False, False, False
         self.state = 'Continue'
         #pygame.mixer.music.pause()
         #pygame.mixer.pause()
@@ -388,7 +405,7 @@ class PauseMenu(Menu):
 
 
     def check_inputs(self):
-        if self.game.BACK_KEY:
+        if self.game.BACK_KEY or self.game.RUN_KEY:
             self.run_display = False
             self.cursor_rect.center = (self.contx + self.offset, self.conty)
         elif self.game.START_KEY:
@@ -399,18 +416,11 @@ class PauseMenu(Menu):
                 self.game.playing = False
                 self.game.fade_screen()
 
-
         elif self.game.UP_KEY:
             if self.state == 'Return':
                 self.state = 'Continue'
                 self.cursor_rect.center = (self.contx + self.offset, self.conty)
-            # elif self.state == 'Continue':
-            #     self.state = 'Return'
-            #     self.cursor_rect.center = (self.retx + self.offset * 1.5, self.rety)
         elif self.game.DOWN_KEY:
-            # if self.state == 'Return':
-            #     self.state = 'Continue'
-            #     self.cursor_rect.center = (self.contx + self.offset, self.conty)
             if self.state == 'Continue':
                 self.state = 'Return'
                 self.cursor_rect.center = (self.retx + self.offset * 1.5 , self.rety)
@@ -424,13 +434,15 @@ class CreditsMenu(Menu):
     def display_menu(self):
         self.run_display = True
         while self.run_display:
-            self.game.display.fill((255, 255, 255))
+            self.game.display.fill((225, 161, 142))
             self.draw_text("Credits", 20, pygame.Color((0,0,0)), self.credx, self.credy)
-            self.draw_text("Created by Christian Duenas", 14, pygame.Color((0,0,0)), self.credx, self.mid_h * .45)
+            self.draw_text("Created by Christian Duenas", 14, pygame.Color((0,0,0)), self.credx, self.mid_h * .5)
             self.draw_text("\"November\" Font by Tepid Monkey Fonts", 14, pygame.Color((0,0,0)), self.credx, self.mid_h + 30)
+            self.draw_text("Spritework Assistance by Phoebe Ly", 14, pygame.Color((0, 0, 0)), self.credx,
+                           self.mid_h + 100)
             self.blit_screen()
             self.check_events()
-            if self.game.START_KEY or self.game.BACK_KEY:
+            if self.game.START_KEY or self.game.BACK_KEY or self.game.JUMP_KEY or self.game.RUN_KEY:
                 self.run_display = False
                 self.game.menu = self.game.Main
             self.game.reset_keys()

@@ -15,7 +15,7 @@ class Level:
         self.game = game
         self.choice = choice
         self.dir = os.path.join(os.getcwd(), "Assets", "maps")
-        self.level_tiles = ["hawk", "snake", "apple", "cloud", "bread", "grass.png",
+        self.level_tiles = ["hawk", "snake", "apple", "cloud", "bread_loaf", "grass.png",
                              "grass2.png", "grass3.png", "grass4.png", "leaves.png", "leaves2.png", "leaves3.png", "leaves_base.png",
                              "shrub1.png","shrub2.png","shrub3.png","shrub4.png","shrub5.png", "shrub6.png",
                              "shrub7.png","shrub8.png","shrub9.png","shrub10.png","shrub11.png", "shrub12.png",
@@ -24,7 +24,7 @@ class Level:
                              'start_flag', 'end_flag', 'z3_leaves_side1.png','z3_leaves_side2.png', 'moving_leaf', "platform.png",
                              "z4_sand1.png","z4_sand2.png", "z4_sand3.png", "z4_sand4.png", "bumper", "z5_water.png", "z5_waterTop.png",
                              "z6_grass_shadow1.png","z6_grass_shadow2.png","z6_grass_shadow3.png", "z6_grass_shadow4.png", "z6_ground.png",
-                             "mushroom", "chunk", "z6_ground_dino.png"]
+                             "mushroom", "chunk", "z6_ground_dino.png", "z8_ground1.png", "z8_ground2.png", "orange"]
         self.load_level()
 
     # Loads the appropriate level
@@ -85,20 +85,23 @@ class Level:
                 elif tile == '1':
                     s = Snake(self.game, x * 32, y * 32 - 8)
                     self.game.enemyList.addSprite(s)
-                elif tile == '2'  or tile == '35':
+                elif tile == '2'  or tile == '35' or tile == '60':
                     food = Food(self.game, x * 32, y * 32, self.tile_list[int(tile)], HUD = True)
                     self.game.objectList.addSprite(food)
                 elif tile == '3':
                     cloud = Cloud(self.game,x*32,y*32)
                     self.game.platforms.addSprite(cloud)
-                elif tile == '4' or tile == '34':
-                    self.game.bread= Food(self.game, x * 32, y * 32, self.tile_list[int(tile)])
-                    self.game.x_mark, self.game.y_mark = x*32, y *32
+                elif tile == '4':
+                    self.game.bread= Food(self.game, x * 32, y * 32 +10, self.tile_list[int(tile)])
+                    self.game.x_mark, self.game.y_mark = x * 32, y * 32 +10
                     self.game.objectList.addSprite(self.game.bread)
+                elif tile == '34':
+                    berry = Food(self.game, x * 32, y * 32, self.tile_list[int(tile)])
+                    self.game.objectList.addSprite(berry)
                 # Load solid tiles
                 elif tile == '5'  or tile == '7' or tile == '8' or tile == '30' or tile == '31' or tile == '43'\
                         or tile == '44' or tile == '45' or tile == '46' or tile == '50' or tile == '51' or tile == '52' or tile == '53'\
-                        or  tile == '54':
+                        or  tile == '54' or tile =='58' or tile =='59':
                     t = Tile(self.game, self.tile_list[int(tile)],x*32,y*32, False, True)
                     self.game.tileList.addSprite(t)
                 # Load One-Way Platforms

@@ -1,4 +1,7 @@
 # Natural-Selection
+
+![Cover Art](https://github.com/ChristianD37/Natural-Selection/blob/main/Screenshots/Cover%20Art.png)
+
 Natural Selection is a 2D tile-based Platformer made using the Pygame Library. 
 
 ![Intro Screen](https://github.com/ChristianD37/Natural-Selection/blob/main/Screenshots/Intro_screen.gif)
@@ -22,3 +25,5 @@ Natural Selection is currently being developed and a finished build has not been
 Created by Christian Duenas
 
 Sprite Assistance by Phoebe Ly
+
+Cover art by junmetry

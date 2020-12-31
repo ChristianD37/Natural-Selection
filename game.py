@@ -15,13 +15,13 @@ from pygame.locals import *
 # Main client for the program
 class Game():
     def __init__(self):
-        #flags = FULLSCREEN | DOUBLEBUF
-        flags = DOUBLEBUF | HWSURFACE
+        self.flags = 0
+        #self.flags = DOUBLEBUF | HWSURFACE
         pygame.mixer.pre_init(44100, -16, 2, 2048)  # Prevents delay in jumping sound
         pygame.init()
         pygame.mixer.init()
-        self.SCREEN_WIDTH = 960
-        self.SCREEN_HEIGHT = 540
+        self.monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
+        self.SCREEN_WIDTH ,self.SCREEN_HEIGHT = 960, 540
         self.DISPLAY_W = 960
         self.DISPLAY_H = 540
         self.TITLE = "Natural Selection"
@@ -29,11 +29,14 @@ class Game():
         self.clock = pygame.time.Clock()
         self.running = True
         self.playing, self.complete = False, False
-        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH,self.SCREEN_HEIGHT),flags)
+        self.load_directories()
+        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = self.save_data['display']['width'], self.save_data['display']['height']
+        self.set_flags()
+        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH,self.SCREEN_HEIGHT), self.flags)
         self.screen.set_alpha(None)
         self.LEFT_KEY,self.RIGHT_KEY, self.DOWN_KEY, self.UP_KEY, self.JUMP_KEY, \
         self.START_KEY, self.BACK_KEY, self.RUN_KEY  = False, False, False,False, False, False, False, False
-        self.load_directories()
+        self.load_spritesheets()
         self.load_controls()
         self.sound_effects, self.effects_vol = {}, {}
         self.set_sound_volume()
@@ -338,9 +341,12 @@ class Game():
         sound_dir = path.join(self.dir, "sounds")
         self.theme_dir, self.menu_music = path.join(sound_dir, "level_themes"), path.join(sound_dir, "menu_themes")
         self.effects_dir = path.join(sound_dir, "sound_effects")
-        self.load_spritesheets()
+        #self.load_spritesheets()
         self.sounds_list = []
         self.default_vol = []
+        # Load game data
+        with open(os.path.join(self.options_dir, "save.json"), 'r+') as file:
+            self.save_data = json.load(file)
 
     def load_menus(self):
         self.Main = MainMenu(self)
@@ -348,6 +354,7 @@ class Game():
         self.credits = CreditsMenu(self)
         self.volume_menu = VolumeMenu(self)
         self.controls_menu = ControlsMenu(self)
+        self.display_menu = DisplayMenu(self)
         self.end_screen = LevelComplete(self)
         self.level_select = Level_Select(self)
         self.game_over_menu = GameOver(self)
@@ -369,8 +376,7 @@ class Game():
         dir = os.path.join("Assets", "images", "spritesheets")
         self.spriteSheet = Spritesheet(os.path.join(dir, "duckSheet"))
         self.duck_sheet = Spritesheet(os.path.join(dir, "duckling_sheet"))
-        self.snake_sheet = Spritesheet(os.path.join(dir, "snake_sheet"))
-        self.hawk_sheet = Spritesheet(os.path.join(dir, "hawk_sheet"))
+        self.enemy_sheet = Spritesheet(os.path.join(dir, "enemy_sheet"))
         self.grass_tiles = Spritesheet(os.path.join(dir, "tiles"))
         self.objects_sheet = Spritesheet(os.path.join(dir, "objects"))
         self.background_sheet = Spritesheet(os.path.join(dir, "decorators"))
@@ -401,9 +407,7 @@ class Game():
             self.CONTROLS = self.DEF_CONTROLS
         self.reassign_controls()
         self.CONTROL_LIST = ['Left', 'Right','Up','Down', 'Start', 'Jump', 'Run']
-        # Load game data
-        with open(os.path.join(self.options_dir, "save.json"), 'r+') as file:
-            self.save_data = json.load(file)
+
 
     def reassign_controls(self):
         # Helper function to reassign controls
@@ -422,8 +426,9 @@ class Game():
         self.add_sound('hurt', .7)
         self.add_sound('pickup', 1)
         self.add_sound('splash', .7)
-        self.add_sound('berry_collect', .25)
+        self.add_sound('berry_collect', .2)
         self.add_sound('select',1)
+        self.add_sound('rock_smash', .2)
 
     def set_sound_volume(self):
         self.volume_mult = 1
@@ -432,6 +437,9 @@ class Game():
         self.load_sounds()
         pygame.mixer.music.set_volume(self.volume_setting / 100)
 
+    def set_flags(self):
+        if self.SCREEN_WIDTH > 960:
+            self.flags = DOUBLEBUF | HWSURFACE | FULLSCREEN
 
     def quit(self):
         pygame.quit()

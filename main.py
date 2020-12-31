@@ -1,7 +1,7 @@
 from game import Game
 
 g = Game()
-g.intro.display_menu()
+#g.intro.display_menu()
 # Main file to loop the game
 while g.running:
     # Use the menu state machine

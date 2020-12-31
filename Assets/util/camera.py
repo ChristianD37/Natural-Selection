@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 from abc import ABC
 vec = pygame.math.Vector2
 
@@ -8,6 +8,7 @@ class Camera:
         self.game = game
         self.offset = vec(0,0)
         self.scrollval = vec(0,0)
+        self.screen_shake = 0
 
     # Sets the strategy pattern for the scroll algorithm
     def setmethod(self, method):
@@ -15,6 +16,11 @@ class Camera:
 
     def scroll(self):
         self.method.scroll()
+        if self.screen_shake > 0:
+            self.screen_shake -= 1
+        if self.screen_shake:
+            self.offset.x += random.randint(0,8) - 4
+            self.offset.x += random.randint(0, 8) - 4
 
 
     def reset_cam(self):
@@ -66,16 +72,19 @@ class Auto(CamScroll):
     def __init__(self, game):
         CamScroll.__init__(self,game)
         self.extra_y = 0
+        self.initial_start = True
 
     def scroll(self):
         if not self.game.player.hurt:
             self.game.camera.scrollval.x += 1 * self.game.dt
-            self.game.camera.scrollval.y += (self.game.player.position.y - self.game.player.rect.h - self.game.camera.scrollval.y - self.game.DISPLAY_H / 2 + self.extra_y) / (
-                                                        16 / self.game.dt)
             self.game.camera.offset.x = min(max(int(self.game.camera.scrollval.x), 0),
                                             self.game.map_w * 32 - (self.game.DISPLAY_W))
-            self.game.camera.offset.y = min(int(self.game.camera.scrollval.y),self.game.deathzone - self.game.DISPLAY_H  )
-
+            if self.game.player.on_ground or self.initial_start:
+                self.initial_start = False
+                self.game.camera.scrollval.y += (self.game.player.position.y - self.game.player.rect.h - self.game.camera.scrollval.y - self.game.DISPLAY_H / 2 + self.extra_y) / (
+                                                        16 / self.game.dt)
+                self.game.camera.offset.y = min(int(self.game.camera.scrollval.y),self.game.deathzone - self.game.DISPLAY_H  )
+            # Check for screen collisions
             if self.game.player.position.x < self.game.camera.offset.x:
                 if self.game.player.tiled: self.game.player.hurt = True
                 #self.game.player.velocity.x += self.game.camera.scrollval.x
@@ -91,13 +100,7 @@ class VerticalFollow(CamScroll):
         self.extra_y = 0
 
     def scroll(self):
-        if not self.game.player.hurt:
-            self.game.camera.scrollval.x += (self.game.player.position.x + self.game.player.rect.w - self.game.camera.scrollval.x - self.game.DISPLAY_W / 4)  # Dividing applies a lag effect to the camera
-            if self.game.player.on_ground:
-                self.game.camera.scrollval.y += ( self.game.player.position.y - self.game.player.rect.h - self.game.camera.scrollval.y - self.game.DISPLAY_H / 2 + self.extra_y) / 10
-            self.game.camera.offset.x = min(max(int(self.game.camera.scrollval.x), 0), self.game.map_w * 32 - (self.game.DISPLAY_W))
-            # self.game.camera.offset.y = int(self.game.camera.scrollval.y)
-            self.game.camera.offset.y = min(int(self.game.camera.scrollval.y), self.game.deathzone - self.game.DISPLAY_H)
+        pass
 
 # class BoundBox(CamScroll):
 #     def __init__(self, game):

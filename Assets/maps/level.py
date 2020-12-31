@@ -24,7 +24,8 @@ class Level:
                              'start_flag', 'end_flag', 'z3_leaves_side1.png','z3_leaves_side2.png', 'moving_leaf', "platform.png",
                              "z4_sand1.png","z4_sand2.png", "z4_sand3.png", "z4_sand4.png", "bumper", "z5_water.png", "z5_waterTop.png",
                              "z6_grass_shadow1.png","z6_grass_shadow2.png","z6_grass_shadow3.png", "z6_grass_shadow4.png", "z6_ground.png",
-                             "mushroom", "chunk", "z6_ground_dino.png", "z8_ground1.png", "z8_ground2.png", "orange"]
+                             "mushroom", "chunk", "z6_ground_dino.png", "z8_ground1.png", "z8_ground2.png", "orange", "z9_gopher.png",
+                             "z9_gopher_plat.png", "gopher_sign.png"]
         self.load_level()
 
     # Loads the appropriate level
@@ -35,7 +36,7 @@ class Level:
             self.game.background.addSprite(Sun(self.game))
             #self.game.background.addSprite(Birds(self.game))
             self.load_hud()
-            self.game.scrolling_background = Hills(self.game)
+            self.game.scrolling_background = Hills(self.game, 0)
             self.game.background.addSprite(self.game.scrolling_background)
             pygame.mixer.music.load(path.join(self.game.theme_dir, "Curious Stroll - Clarinet.ogg"))
             self.load_map_csv("chaparall_1.csv")
@@ -48,14 +49,12 @@ class Level:
             self.game.background.addSprite(Sun(self.game))
             #self.game.background.addSprite(Birds(self.game))
             self.load_hud()
-            self.game.scrolling_background = Hills(self.game)
+            self.game.scrolling_background = Hills(self.game,1)
             self.game.background.addSprite(self.game.scrolling_background)
             pygame.mixer.music.load(path.join(self.game.theme_dir, "Curious Stroll - Clarinet.ogg"))
             self.load_map_csv("chaparall_2.csv")
             self.load_tiles()
             self.game.camera.setmethod(Auto(self.game))
-
-
 
         elif (self.choice == 3):
             self.tile_list = self.level_tiles
@@ -120,7 +119,7 @@ class Level:
                 elif tile == '6' or tile =='12' or tile =='13' or tile =='14' or tile =='15' or tile =='16' \
                         or tile == '17'or tile == '18' or tile == '19' or tile == '20' or tile == '21'\
                         or tile == '22' or tile == '23' or tile == '24' or tile == '25' or tile == '26'\
-                        or tile == '27' or tile == '28' or tile == '33' or tile == '39' or tile == '40':
+                        or tile == '27' or tile == '28' or tile == '33' or tile == '39' or tile == '40' or tile == '62':
                     t = Tile(self.game, self.tile_list[int(tile)], x * 32, y * 32, True, False)
                     self.game.background_tiles.addSprite(t)
                     t.remove(self.game.tiles)
@@ -159,9 +158,15 @@ class Level:
                     self.game.interactive_tiles.addSprite(m)
                 elif tile == '56':
                     self.game.chunk_mark = x * 32
-                elif tile == '57':
+                elif tile == '57' or tile == '63':
                     l = Large_Tile(self.game, self.tile_list[int(tile)], x * 32, y * 32)
                     self.game.background_tiles.addSprite(l)
+                elif tile == '61':
+                    t = Tile(self.game, self.tile_list[int(tile)], x * 32, y * 32, True, False)
+                    self.game.background_tiles.addSprite(t)
+                    t.remove(self.game.tiles)
+                    g = Gopher(self.game,x * 32, y * 32 + 16)
+                    self.game.enemyList.addSprite(g)
                 x += 1
             y += 1
             self.game.map_w, self.game.map_h = x, y # Load the width and height of the map

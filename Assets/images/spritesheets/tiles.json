@@ -487,14 +487,38 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
 	"sourceSize": {"w":32,"h":32}
+},
+"z9_gopher.png":
+{
+	"frame": {"x":1952,"y":0,"w":32,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"z9_gopher_plat.png":
+{
+	"frame": {"x":1984,"y":0,"w":32,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"z9_gopher_sign_tile.png":
+{
+	"frame": {"x":2016,"y":0,"w":32,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+	"sourceSize": {"w":32,"h":32}
 }},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "tiles.png",
 	"format": "RGBA8888",
-	"size": {"w":1952,"h":32},
+	"size": {"w":2048,"h":32},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:b30e7bd213926b610b0a4bb452aa79f1:c01d30b3083bb60f7a410cbfa971fc68:accbe1e7e294ded8391337fc1c446319$"
+	"smartupdate": "$TexturePacker:SmartUpdate:2166b6f925acbef9faee674c1c907461:ca38cf8d9df29f4fa87fd22459c54532:accbe1e7e294ded8391337fc1c446319$"
 }
 }

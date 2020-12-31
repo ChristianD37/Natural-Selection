@@ -43,14 +43,18 @@ class BlueBackground(Decorator):
 
 
 class Hills(Decorator):
-    def __init__(self, game):
+    def __init__(self, game,type):
         Decorator.__init__(self, game)
         self.image = pygame.transform.scale(pygame.image.load(os.path.join(self.dir,"hills2.png")).convert_alpha(), (1920, 540))
         self.width = self.image.get_rect().w
         self.x2 = self.width
+        self.auto = type
 
     def draw(self):
-        self.scroll()
+        if self.auto:
+            self.auto_scroll()
+        else:
+            self.scroll()
         self.game.display.blit(self.image, (self.x, 0))
         self.game.display.blit(self.image, (self.x2, 0))
 
@@ -58,8 +62,8 @@ class Hills(Decorator):
         # Stops background from scrolling if the player is colliding into a wall.
         if self.game.player.bump or self.game.player.hurt or self.game.camera.method.scroll_lock():
             return
-        self.x -= self.game.player.velocity.x * self.game.dt * .08
-        self.x2 -= self.game.player.velocity.x * self.game.dt * .08
+        self.x -= self.game.player.velocity.x * self.game.dt * .06
+        self.x2 -= self.game.player.velocity.x * self.game.dt * .06
         # Handle Right Scroll
         if self.game.player.velocity.x > 0:
             if self.x <= -self.width:
@@ -72,6 +76,18 @@ class Hills(Decorator):
                 self.x = -self.width
             if self.x2 >= self.width:
                 self.x2 = -self.width
+
+    def auto_scroll(self):
+        if self.game.player.bump or self.game.player.hurt or self.game.camera.method.scroll_lock():
+            return
+        if self.game.camera.scrollval.x > 0:
+            self.x -= 1 * self.game.dt * .05
+            self.x2 -= 1 * self.game.dt * .05
+        # Handle Right Scroll
+        if self.x <= -self.width:
+            self.x = self.width
+        if self.x2 <= -self.width:
+            self.x2 = self.width
 
 class Sun(Decorator):
     def __init__(self, game):

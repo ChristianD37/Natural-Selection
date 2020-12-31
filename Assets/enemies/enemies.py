@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 from math import sqrt, hypot
 vec = pygame.math.Vector2
 
@@ -25,7 +25,7 @@ class Snake(pygame.sprite.Sprite):
         self.image = self.left_frames[0]
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = x, y
-        self.velocity = vec(1,0)
+        self.velocity = vec(-1,0)
         self.position = vec(x,y)
         self.gravity, self.current_chunk = .5, 0
         self.last_update, self.current_frame = 0, 0
@@ -65,10 +65,10 @@ class Snake(pygame.sprite.Sprite):
         return distance
 
     def load_images(self):
-        self.left_frames = [self.game.snake_sheet.get_sprite("snake1.png"), self.game.snake_sheet.get_sprite("snake2.png"),self.game.snake_sheet.get_sprite("snake3.png"),
-                            self.game.snake_sheet.get_sprite("snake4.png"),self.game.snake_sheet.get_sprite("snake5.png"),self.game.snake_sheet.get_sprite("snake6.png"),
-                            self.game.snake_sheet.get_sprite("snake7.png"),self.game.snake_sheet.get_sprite("snake8.png"),self.game.snake_sheet.get_sprite("snake9.png"),
-                            self.game.snake_sheet.get_sprite("snake10.png")]
+        self.left_frames = [self.game.enemy_sheet.get_sprite("snake1.png"), self.game.enemy_sheet.get_sprite("snake2.png"),self.game.enemy_sheet.get_sprite("snake3.png"),
+                            self.game.enemy_sheet.get_sprite("snake4.png"),self.game.enemy_sheet.get_sprite("snake5.png"),self.game.enemy_sheet.get_sprite("snake6.png"),
+                            self.game.enemy_sheet.get_sprite("snake7.png"),self.game.enemy_sheet.get_sprite("snake8.png"),self.game.enemy_sheet.get_sprite("snake9.png"),
+                            self.game.enemy_sheet.get_sprite("snake10.png")]
         self.right_frames = []
         for frame in self.left_frames:
             self.right_frames.append(pygame.transform.flip(frame,True,False))
@@ -155,9 +155,9 @@ class Hawk(pygame.sprite.Sprite):
             self.game.display.blit(self.image, (rel_x, rel_y))
 
     def load_images(self):
-        self.left_frames = [self.game.hawk_sheet.get_sprite("hawk1.png"), self.game.hawk_sheet.get_sprite("hawk2.png"),
-                            self.game.hawk_sheet.get_sprite("hawk3.png"), self.game.hawk_sheet.get_sprite("hawk4.png"),
-                            self.game.hawk_sheet.get_sprite("hawk5.png")]
+        self.left_frames = [self.game.enemy_sheet.get_sprite("hawk1.png"), self.game.enemy_sheet.get_sprite("hawk2.png"),
+                            self.game.enemy_sheet.get_sprite("hawk3.png"), self.game.enemy_sheet.get_sprite("hawk4.png"),
+                            self.game.enemy_sheet.get_sprite("hawk5.png")]
 
         self.right_frames = []
         for frame in self.left_frames:
@@ -251,5 +251,106 @@ class Hawk(pygame.sprite.Sprite):
 
 
 
+class Gopher(Enemy):
+    def __init__(self, game,x,y):
+        self.game = game
+        self.groups = self.game.enems
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.game.enemyList.addSprite(self)
+        self.load_images()
+        self.rect = self.image.get_rect()
+        self.rect.x, self.rect.y = x, y
+        self.current_frame, self.last_update = 0,0
+        self.rock_update, self.drop, self.rock_dropped = 0,0,0
+        self.buffer = 2000 + random.randint(0,1000)
 
+    def update(self):
+        rel_x, rel_y = self.rect.x - self.game.camera.offset.x, self.rect.y - self.game.camera.offset.y
+        if rel_x >= -self.rect.w and rel_x <= self.game.DISPLAY_W and rel_y >= -self.rect.h \
+        and rel_y <= self.game.DISPLAY_H + self.rect.h:
+            self.throw_rock()
+            self.animate()
+
+    def animate(self):
+        now = pygame.time.get_ticks()
+        if self.rock_dropped:
+            self.image = self.drop_image
+            if now - self.last_update > 500:
+                self.rock_dropped = False
+            return
+        if now - self.last_update > 150:
+            self.last_update = now
+            self.current_frame = (self.current_frame + 1) % len(self.frames)
+            self.image = self.frames[self.current_frame]
+
+    def throw_rock(self):
+        now = pygame.time.get_ticks()
+        self.drop = False
+        if now - self.rock_update > self.buffer:
+            self.drop = True
+            self.rock_update = now
+
+        if self.drop:
+            self.rock_dropped = True
+            rock = Gopher_Rock(self.game,self.rect.x,self.rect.y + 20)
+            self.game.enemyList.addSprite(rock)
+
+    def load_images(self):
+        self.frames = []
+        for i in range (1,11):
+            self.frames.append(self.game.enemy_sheet.get_sprite('gopher' + str(i) + '.png'))
+        self.image = self.frames[0]
+        self.drop_image = self.game.enemy_sheet.get_sprite("gopher_throw1.png")
+
+class Gopher_Rock(Enemy):
+    def __init__(self, game, x, y):
+        self.game = game
+        self.groups = self.game.enems
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.game.enemyList.addSprite(self)
+        self.image = self.game.enemy_sheet.get_sprite("gopher_rock.png")
+        self.rect = self.image.get_rect()
+        self.rect.x, self.rect.y = x, y
+        self.position = vec(x,y)
+        self.velocity = 3
+        self.accumulated = 0
+
+    def update(self):
+        self.position.y += self.velocity * self.game.dt
+        self.rect.y = self.position.y
+        self.accumulated += self.velocity * self.game.dt
+        hits = []
+        for tile in self.game.tileList.sprites:
+            if self.rect.colliderect(tile):
+                hits.append(tile)
+        if hits:
+            self.game.sound_effects['rock_smash'].play()
+            self.game.particles.addSprite(Gopher_Rock_Particle(self.game, self.rect.x, hits[0].rect.y, 1))
+            self.game.particles.addSprite(Gopher_Rock_Particle(self.game, self.rect.x, hits[0].rect.y, -1))
+            self.game.particles.addSprite(Gopher_Rock_Particle(self.game, self.rect.x-5, hits[0].rect.y-5, 1))
+            self.game.particles.addSprite(Gopher_Rock_Particle(self.game, self.rect.x-8, hits[0].rect.y-5, -1))
+            self.game.enemyList.kill(self)
+            self.game.camera.screen_shake = 20
+
+class Gopher_Rock_Particle():
+    def __init__(self, game, x, y, direction):
+        self.game = game
+        self.image = self.game.enemy_sheet.get_sprite("rock_particle.png")
+        self.rect = self.image.get_rect()
+        self.position = pygame.math.Vector2(x, y)
+        self.velocity = pygame.math.Vector2(direction, -2)
+        self.rect.x, self.rect.y = self.position.x, self.position.y
+        self.limit = y
+
+    def update(self):
+        self.position += self.velocity * self.game.dt
+        self.velocity.x += .01 * self.game.dt
+        self.velocity.y += .1 * self.game.dt
+        self.rect.x, self.rect.y = self.position.x, self.position.y
+        if self.rect.y > self.limit:
+            self.game.particles.kill(self)
+
+    def draw(self):
+        self.update()
+        self.game.display.blit(self.image,(self.rect.x - self.game.camera.offset.x, self.rect.y - self.game.camera.offset.y))
 

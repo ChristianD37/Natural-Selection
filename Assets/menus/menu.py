@@ -1,5 +1,5 @@
 import pygame
-from os import path
+from os import path, environ
 import json, math
 from Assets.util.file_handler import write_save
 
@@ -190,18 +190,21 @@ class OptionsMenu(Menu):
         self.state = 'Volume'
         self.offset = -50 * 2
         self.volx, self.voly = self.mid_w, self.mid_h
-        self.contrx, self.contry = self.mid_w, self.mid_h + 50 * 2
+        self.contrx, self.contry = self.mid_w, self.mid_h + 75
+        self.dispx, self.dispy = self.mid_w, self.mid_h + 150
         self.cursor_rect.center = (self.volx + self.offset, self.voly)
 
     def display_menu(self):
         self.run_display = True
         while self.run_display:
+            self.game.get_delta()
             self.check_events()
             self.check_inputs()
             self.game.display.fill((198,215,185))
             self.draw_text("Options", 20, pygame.Color((0,0,0)), self.mid_w, self.game.DISPLAY_H /4)
             self.draw_text("Volume", 20, pygame.Color((0,0,0)), self.volx, self.voly)
             self.draw_text("Controls", 20, pygame.Color((0,0,0)), self.contrx, self.contry)
+            self.draw_text("Display", 20, pygame.Color((0, 0, 0)), self.dispx, self.dispy)
             self.draw_cursor()
             self.blit_screen()
             self.game.reset_keys()
@@ -218,18 +221,29 @@ class OptionsMenu(Menu):
             elif self.state == 'Controls':
                 self.game.menu = self.game.controls_menu
                 self.run_display = False
+            elif self.state == 'Display':
+                self.game.menu = self.game.display_menu
+                self.run_display = False
         elif self.game.UP_KEY:
+            self.game.sound_effects['select'].play()
             if self.state == 'Volume':
-                self.state = 'Controls'
-                self.cursor_rect.center = (self.contrx + self.offset, self.contry)
+                self.state = 'Display'
+                self.cursor_rect.center = (self.dispx + self.offset, self.dispy)
             elif self.state == 'Controls':
                 self.state = 'Volume'
                 self.cursor_rect.center = (self.volx + self.offset , self.voly)
+            elif self.state == 'Display':
+                self.state = 'Controls'
+                self.cursor_rect.center = (self.contrx + self.offset , self.contry)
         elif self.game.DOWN_KEY:
+            self.game.sound_effects['select'].play()
             if self.state == 'Volume':
                 self.state = 'Controls'
                 self.cursor_rect.center = (self.contrx + self.offset, self.contry)
             elif self.state == 'Controls':
+                self.state = 'Display'
+                self.cursor_rect.center = (self.dispx + self.offset , self.dispy)
+            elif self.state == 'Display':
                 self.state = 'Volume'
                 self.cursor_rect.center = (self.volx + self.offset , self.voly)
 
@@ -253,6 +267,7 @@ class VolumeMenu(Menu):
     def display_menu(self):
         self.run_display = True
         while self.run_display:
+            self.game.get_delta()
             self.check_events()
             self.check_inputs()
             self.game.display.fill((198,215,185))
@@ -305,7 +320,7 @@ class ControlsMenu(Menu):
         self.state = 'Volume'
         self.offset = -50 * 2
         self.volx, self.voly = self.mid_w, self.mid_h
-        self.cursor_rect.center = (self.game.DISPLAY_W/2 + self.offset * 2, self.game.DISPLAY_H/2.5)
+        self.cursor_rect.center = (self.game.DISPLAY_W/2 + self.offset * 2, self.game.DISPLAY_H/3)
         self.cursor_pos, self.curr_index = 0, 0
 
     def display_menu(self):
@@ -318,7 +333,7 @@ class ControlsMenu(Menu):
             self.check_events()
             self.check_input()
             self.game.display.fill((198,215,185))
-            self.draw_text('Change Controls',20, pygame.Color((0,0,0)), self.game.DISPLAY_W/2, self.game.DISPLAY_H/4)
+            self.draw_text('Change Controls',20, pygame.Color((0,0,0)), self.game.DISPLAY_W/2, self.game.DISPLAY_H/6)
             self.display_current_controls()
             self.draw_cursor()
             self.blit_screen()
@@ -327,8 +342,10 @@ class ControlsMenu(Menu):
     def display_current_controls(self):
         i = 0
         for control in self.game.CONTROLS:
-            self.draw_text(control + ':' + pygame.key.name(self.game.CONTROLS[control]),20, pygame.Color((0,0,0)), self.game.DISPLAY_W/2, self.game.DISPLAY_H/2.5 + i)
+            self.draw_text(control + ':' + pygame.key.name(self.game.CONTROLS[control]),20, pygame.Color((0,0,0)), self.game.DISPLAY_W/2, self.game.DISPLAY_H/3 + i)
             i += 40
+        self.draw_text('Exit game with \"Escape\"', 20, pygame.Color((0, 0, 0)),
+                       self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2.5 + i)
 
     def check_input(self):
         if self.game.BACK_KEY or self.game.RUN_KEY:
@@ -338,15 +355,17 @@ class ControlsMenu(Menu):
         elif self.game.START_KEY or self.game.JUMP_KEY:
             self.get_new_control()
         elif self.game.DOWN_KEY:
+            self.game.sound_effects['select'].play()
             self.curr_index += 1
             if self.curr_index > 6:
                 self.curr_index = 0
-            self.cursor_rect.center = (self.game.DISPLAY_W/2 + self.offset * 2, self.game.DISPLAY_H/2.5 + self.curr_index * 40)
+            self.cursor_rect.center = (self.game.DISPLAY_W/2 + self.offset * 2, self.game.DISPLAY_H/3 + self.curr_index * 40)
         elif self.game.UP_KEY:
+            self.game.sound_effects['select'].play()
             self.curr_index -= 1
             if self.curr_index < 0:
                 self.curr_index = 6
-            self.cursor_rect.center = (self.game.DISPLAY_W/2 + self.offset * 2, self.game.DISPLAY_H/2.5 + self.curr_index * 40)
+            self.cursor_rect.center = (self.game.DISPLAY_W/2 + self.offset * 2, self.game.DISPLAY_H/3 + self.curr_index * 40)
 
     def get_new_control(self):
         done = False
@@ -367,6 +386,60 @@ class ControlsMenu(Menu):
                         json.dump(self.game.CONTROLS, file)
                     self.game.reassign_controls()
                     done = True
+
+class DisplayMenu(Menu):
+    def __init__(self, game):
+        Menu.__init__(self, game)
+        self.states = {0 : (960, 540), 1 : (1920,1080)}
+        self.flags = {0 : 0,
+                      1 : pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF }
+        self.offset = -230
+        self.volx, self.voly = self.mid_w, self.mid_h
+        self.cursor_rect.center = (self.game.DISPLAY_W/2 + self.offset * 2, self.game.DISPLAY_H/2.5)
+        self.cursor_pos, self.curr_index = 0, 0
+        self.index = 0
+        self.newline = 75
+
+
+    def display_menu(self):
+        self.run_display = True
+        while self.run_display:
+            self.game.get_delta()
+            self.check_events()
+            self.check_input()
+            self.game.display.fill((198,215,185))
+            self.draw_text('Display Settings',20, pygame.Color((0,0,0)), self.game.DISPLAY_W/2, self.game.DISPLAY_H/5)
+            self.draw_text('Standard (540 x 960)', 20, pygame.Color((0, 0, 0)), self.game.DISPLAY_W/2,self.game.DISPLAY_H/3)
+            self.draw_text('Fit    (' + (str(self.game.monitor_size[0]) +' x '+ str(self.game.monitor_size[1])+')'), 20,
+                           pygame.Color((0, 0, 0)),self.game.DISPLAY_W/2,self.game.DISPLAY_H/3 + self.newline)
+            self.draw_text('Changes will take place', 20, pygame.Color((0, 0, 0)),
+                           self.game.DISPLAY_W / 2, self.game.DISPLAY_H -200)
+            self.draw_text('once the game is reset', 20, pygame.Color((0, 0, 0)),
+                           self.game.DISPLAY_W / 2, self.game.DISPLAY_H - 150)
+            self.draw_text('*Higher Resolution may impact performance', 20, pygame.Color((0, 0, 0)),
+                           self.game.DISPLAY_W / 2, self.game.DISPLAY_H - 50)
+            self.draw_cursor()
+            self.blit_screen()
+            self.game.reset_keys()
+
+    def check_input(self):
+        if self.game.RUN_KEY or self.game.BACK_KEY:
+            self.run_display = False
+            self.game.menu = self.game.options
+        elif self.game.JUMP_KEY or self.game.START_KEY:
+            self.resize_display()
+        if self.game.DOWN_KEY:  # Move the Cursor Down
+            self.index = (self.index + 1) % len(self.states)
+        elif self.game.UP_KEY:  # Move the Cursor Down
+            self.index = abs((self.index - 1) % len(self.states))
+        self.cursor_rect.center = (self.game.DISPLAY_W / 2 + self.offset,
+                                   self.game.DISPLAY_H / 3 + (self.index * self.newline))
+
+    def resize_display(self):
+        self.game.save_data['display']['width'] = self.states[self.index][0]
+        self.game.save_data['display']['height'] = self.states[self.index][1]
+        write_save(self.game.options_dir, self.game.save_data)
+
 
 
 

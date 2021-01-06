@@ -10,13 +10,13 @@ Flipper, a newborn hatchling, finds himself wandering through the a world full o
 
 ![Intro Screen](https://github.com/ChristianD37/Natural-Selection/blob/main/Screenshots/Intro_screen.gif)
 
+![Leaves](https://github.com/ChristianD37/Natural-Selection/blob/main/Screenshots/Leaves_screen.gif)
+
 ![Chaparall Screen](https://github.com/ChristianD37/Natural-Selection/blob/main/Screenshots/Chaparall_screenshot.gif)
 
 ![Gophers](https://github.com/ChristianD37/Natural-Selection/blob/main/Screenshots/Gophers.gif)
 
 ![Swimming](https://github.com/ChristianD37/Natural-Selection/blob/main/Screenshots/Swimming.gif)
-
-
 
 
 ## How to Play
